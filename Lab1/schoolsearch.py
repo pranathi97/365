@@ -1,4 +1,4 @@
-#Sydney Jaques
+#Sydney Jaques, Pranathi Guntupalli, Pramika Kumar
 #Lab 1 Part 1 search students.txt file by user desired field
 #CSC - 365
 
