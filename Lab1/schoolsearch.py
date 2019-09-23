@@ -37,7 +37,6 @@ def endOfSpectrumGPA(comm, f):
     for line in f.readlines():
         cols = [x.strip() for x in line.split(",")]
         if cols[2] == comm[1]:
-            print(cols[5] + expression + curr)
             if eval(cols[5] + expression + curr):
                 curr = cols[5]
     print("Final Result: " + curr)
@@ -51,11 +50,19 @@ def getAvgByGrade(comm, f):
         if cols[2] == comm[1]:
             addTotal += float(cols[5])
             count += 1
+    if addTotal == 0:
+        return
     print("Grade: " + str(comm[1]) + " Avg: " + str(addTotal/count))
     
 
-            
-
+def getNumStudentsByGrade(f):
+    gradeCount = [0] * 7
+    for line in f.readlines():
+        cols = [x.strip() for x in line.split(",")]
+        grade = int(cols[2])
+        gradeCount[grade] += 1
+    for i in range(len(gradeCount)):
+        print(str(i) + ": " + str(gradeCount[i]))
 
 
 #Returned indexes will be printed in main, as they are the results of desired
@@ -67,11 +74,18 @@ def main():
     except:
         print("Error: No file students.txt found in directory")
         exit(1)
+    print("\nSearch Criteria Commands:")
+    print("S[tudent]: <lastname> [B[us]]\n" + 
+          "T[eacher]: <lastname>\n" + 
+          "B[us]: <number>\n" + 
+          "G[rade]: <number> [H[igh]|L[ow]]\n" + 
+          "A[verage]: <number>\n" + 
+          "I[nfo]\n" + 
+          "Q[uit]\n")
     while inputCommand != "Q":
         inputCommand = input("Enter Search Criteria: ")
         command = inputCommand.split(" ")
         command[0] = command[0][0]
-        print(command)
         if command[0] == "S":
             #Search Student LName
             if len(command) == 2:
@@ -100,8 +114,9 @@ def main():
             if len(command) == 2:
                 getAvgByGrade(command, f)
         elif command[0] == "I":
-        #Print total number of students in each grade(0-6)
-            index = 2
+            if len(command) == 1:
+                #Print total number of students in each grade(0-6)
+                getNumStudentsByGrade(f)
         elif command[0] == "Q":
         #Quit
             return
