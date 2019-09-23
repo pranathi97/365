@@ -70,7 +70,8 @@ def main():
     while inputCommand != "Q":
         inputCommand = input("Enter Search Criteria: ")
         command = inputCommand.split(" ")
-
+        command[0] = command[0][0]
+        print(command)
         if command[0] == "S":
             #Search Student LName
             if len(command) == 2:
